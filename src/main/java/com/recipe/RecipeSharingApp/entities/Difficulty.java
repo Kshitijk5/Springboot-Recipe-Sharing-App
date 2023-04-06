@@ -1,6 +1,7 @@
 package com.recipe.RecipeSharingApp.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class Difficulty {
     private long id;
     private String difficultyLevel;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "difficultyLevel")
     private List<Recipe> recipes;
 
