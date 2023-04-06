@@ -1,4 +1,4 @@
-package com.recipe.RecipeSharingApp.dto;
+package com.recipe.RecipeSharingApp.payload;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
