@@ -1,5 +1,6 @@
 package com.recipe.RecipeSharingApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,7 @@ public class User {
     private String password;
     private String profilePicURL;
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Recipe> recipes;
     private Date creationDate;
 
