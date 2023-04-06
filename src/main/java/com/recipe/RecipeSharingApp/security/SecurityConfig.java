@@ -14,8 +14,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Controller;
 
 @Configuration
-@EnableMethodSecurity
-public  class SecurityConfig {
+//@EnableMethodSecurity
+public class SecurityConfig {
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -23,16 +23,18 @@ public  class SecurityConfig {
     @Bean
     public SecurityFilterChain getSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeHttpRequests(authorize -> authorize
-                                .requestMatchers("/api/**").permitAll()
-                                .requestMatchers("/swagger-ui/index.html").permitAll()
 
-//                        .requestMatchers("/swagger-resources/", "/webjars/")
-//                        .requestMatchers(HttpMethod.OPTIONS, "/**")
-                                .anyRequest().authenticated()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/user").permitAll()
+                        .requestMatchers("/recipe").permitAll()
+                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/swagger-ui/index.html").permitAll()
+
+
+                        .anyRequest().authenticated()
                 );
 
-
+        http.httpBasic();
         return http.build();
     }
 
@@ -42,7 +44,7 @@ public  class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
