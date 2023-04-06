@@ -1,10 +1,7 @@
 package com.recipe.RecipeSharingApp.payload;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.recipe.RecipeSharingApp.entities.Difficulty;
 import com.recipe.RecipeSharingApp.entities.User;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

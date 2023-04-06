@@ -2,7 +2,6 @@ package com.recipe.RecipeSharingApp.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.yaml.snakeyaml.events.Event;
 
 import java.time.Duration;
 import java.util.List;

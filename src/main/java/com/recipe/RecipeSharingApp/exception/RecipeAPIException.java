@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 
 public class RecipeAPIException extends RuntimeException {
 
-    private HttpStatus status;
-    private String message;
+    private final HttpStatus status;
+    private final String message;
 
     public RecipeAPIException(HttpStatus status, String message) {
         this.status = status;

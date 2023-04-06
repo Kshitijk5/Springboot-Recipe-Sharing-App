@@ -16,7 +16,7 @@ public class AuthController {
     private AuthService authService;
 
 
-    @PostMapping(value = {"/signin", "/login"})
+    @PostMapping(value = {"/sign-in", "/login"})
     public ResponseEntity<String> login(@RequestBody Login login) {
         return new ResponseEntity<>(authService.loginUser(login), HttpStatus.OK);
     }
@@ -27,7 +27,7 @@ public class AuthController {
             @RequestParam(value = "file", required = false) MultipartFile profilePic
     ) {
 
-        return new ResponseEntity<String>(authService.registerUser(register), HttpStatus.OK);
+        return new ResponseEntity<>(authService.registerUser(register), HttpStatus.OK);
     }
 
 
