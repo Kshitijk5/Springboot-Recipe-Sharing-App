@@ -11,8 +11,18 @@ import java.util.Collection;
 @Component
 public class CustomUserDetail implements UserDetails {
 
+    private long id;
     private String username;
     private String email;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     private Collection<? extends GrantedAuthority> authorities;
 
     private String profileUrl;
@@ -22,7 +32,8 @@ public class CustomUserDetail implements UserDetails {
 
     }
 
-    public CustomUserDetail(String username, String email,String profileUrl, String password, Collection<GrantedAuthority> authorities) {
+    public CustomUserDetail(long id,String username, String email,String profileUrl, String password, Collection<GrantedAuthority> authorities) {
+        this.id=id;
         this.username = username;
         this.email = email;
         this.authorities = authorities;
