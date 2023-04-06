@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface RecipeRepository extends JpaRepository<Recipe,Long> {
     @Override
     Optional<Recipe> findById(Long aLong);
+
+
 }
