@@ -1,7 +1,7 @@
 package com.recipe.RecipeSharingApp.service.Impl;
 
-import com.recipe.RecipeSharingApp.dto.Login;
-import com.recipe.RecipeSharingApp.dto.Register;
+import com.recipe.RecipeSharingApp.payload.Login;
+import com.recipe.RecipeSharingApp.payload.Register;
 import com.recipe.RecipeSharingApp.entities.Role;
 import com.recipe.RecipeSharingApp.entities.User;
 import com.recipe.RecipeSharingApp.exception.RecipeAPIException;
@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,14 +39,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String loginUser(Login loginDto) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(), loginDto.getPassword()));
 
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(loginDto.getUsernameOrEmail(), loginDto.getPassword()));
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return "User logged in ";
+            return "User logged in ";
+        } catch (AuthenticationException authenticationException) {
+            return "User not registered";
+        }
 
     }
 
