@@ -10,11 +10,12 @@ import org.yaml.snakeyaml.events.Event;
 import java.time.Duration;
 import java.util.List;
 
-@Entity
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Recipe {
 
      @Id
