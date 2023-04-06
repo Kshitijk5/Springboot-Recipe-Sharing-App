@@ -2,6 +2,7 @@ package com.recipe.RecipeSharingApp.security;
 
 import com.recipe.RecipeSharingApp.entities.User;
 import com.recipe.RecipeSharingApp.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +17,9 @@ import java.util.stream.Collectors;
 public class CustomUserDetailService implements UserDetailsService {
 
 
-    private final UserRepository userRepository;
+    private  @Autowired UserRepository userRepository;
 
-    public CustomUserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+
 
     @Override
 
@@ -35,6 +34,6 @@ public class CustomUserDetailService implements UserDetailsService {
                 .map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toSet());
 
-        return new CustomUserDetail(user.getUsername(),user.getEmail(),user.getProfilePicURL(),user.getPassword(),authorities);
+        return new CustomUserDetail(user.getId(),user.getUsername(),user.getEmail(),user.getProfilePicURL(),user.getPassword(),authorities);
     }
 }
