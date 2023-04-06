@@ -1,10 +1,7 @@
 package com.recipe.RecipeSharingApp.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.yaml.snakeyaml.events.Event;
 
 import java.time.Duration;
@@ -16,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 public class Recipe {
 
      @Id
