@@ -17,8 +17,6 @@ public class RecipeController {
 
     public final RecipeService recipeService;
 
-
-
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
 
@@ -44,7 +42,9 @@ public class RecipeController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecipeDto>  updateById(@PathVariable("id") long id,@RequestBody RecipeDto recipeDto,Principal principal ) throws Exception {
+    public ResponseEntity<RecipeDto>updateById(@PathVariable("id") long id,
+    		@RequestBody RecipeDto recipeDto,
+    		Principal principal ) throws Exception {
 
         return new ResponseEntity<>(recipeService.updateById(id,recipeDto,principal),HttpStatus.OK);
     }
