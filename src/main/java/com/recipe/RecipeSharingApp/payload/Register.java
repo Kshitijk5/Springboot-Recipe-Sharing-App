@@ -1,4 +1,4 @@
-package com.recipe.RecipeSharingApp.dto;
+package com.recipe.RecipeSharingApp.payload;
 
 
 import lombok.AllArgsConstructor;
@@ -16,6 +16,8 @@ public class Register {
     private String  email;
 
     private String password;
+
+    private String profilePicUrl;
 
 
 }
