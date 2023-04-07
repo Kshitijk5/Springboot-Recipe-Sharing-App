@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
 
-	User getById(long id);
+	UserDto getById(long id);
 
 	String deleteById(long id);
 
