@@ -26,7 +26,6 @@ public class AuthController {
             @RequestBody Register register,
             @RequestParam(value = "file", required = false) MultipartFile profilePic
     ) {
-
         return new ResponseEntity<>(authService.registerUser(register), HttpStatus.OK);
     }
 
