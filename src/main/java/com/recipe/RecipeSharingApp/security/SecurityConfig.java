@@ -14,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.stereotype.Controller;
 
 @Configuration
-//@EnableMethodSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
     @Autowired
@@ -28,6 +28,7 @@ public class SecurityConfig {
                         .requestMatchers("/user").permitAll()
                         .requestMatchers("/recipe").permitAll()
                         .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/swagger-ui/**").permitAll()
                         .requestMatchers("/swagger-ui/index.html").permitAll()
 
 
