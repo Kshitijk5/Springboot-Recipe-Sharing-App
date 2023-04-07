@@ -7,7 +7,7 @@ This is a recipe sharing app built with Spring Boot. Users can share their own r
 * MySQL
 
 # Installation
-* Clone the repository: git clone https://github.com/your-username/recipe-sharing-app.git
+* Clone the repository: git clone https://github.com/Kshitijk5/Springboot-Recipe-Sharing-App.git
 * Open the project directory: cd recipe-sharing-app
 * Update the application.properties file with your database credentials.
 * Build the project: mvn clean package
