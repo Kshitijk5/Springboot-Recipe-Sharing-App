@@ -27,13 +27,13 @@ public class UserController {
 
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<UserDto>> getAllUsers(){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
     
     
     @GetMapping("/{id}")
-    public ResponseEntity<User> getById(@PathVariable("id") long id){
+    public ResponseEntity<UserDto> getById(@PathVariable("id") long id){
     	return new ResponseEntity<>(userService.getById(id),HttpStatus.OK);
     }
     
