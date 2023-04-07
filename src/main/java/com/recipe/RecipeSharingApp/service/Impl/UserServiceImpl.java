@@ -1,67 +1,82 @@
 package com.recipe.RecipeSharingApp.service.Impl;
 
+import com.recipe.RecipeSharingApp.entities.Recipe;
 import com.recipe.RecipeSharingApp.entities.User;
 import com.recipe.RecipeSharingApp.exception.ResourceNotFoundException;
+import com.recipe.RecipeSharingApp.repository.RecipeRepository;
 import com.recipe.RecipeSharingApp.repository.UserRepository;
 import com.recipe.RecipeSharingApp.service.UserService;
 import com.recipe.RecipeSharingApp.payload.UserDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-	@Autowired
-	private ModelMapper modelMapper;
+    @Autowired
+    private RecipeRepository recipeRepository;
 
-	@Override
-	public List<User> getAllUsers() {
-		return userRepository.findAll();
-	}
+    @Autowired
+    private ModelMapper modelMapper;
 
-	@Override
-	public User getById(long id) {
-		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
 
-	}
 
-	@Override
-	public String deleteById(long id) {
-		User user = getById(id);
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
 
-		userRepository.delete(user);
-		return "User deleted";
+        return users.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
 
-	}
+    @Override
+    public UserDto getById(long id) {
+        return mapToDto(userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id)));
 
-	@Override
-	public UserDto updateById(long id, UserDto userDto) {
-		User user = mapToEntity(userDto);
+    }
 
-		User tempUser = getById(id);
+    @Override
+    public String deleteById(long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
+        List<Recipe> userRecipe  = recipeRepository.findByUser(user);
+        for ( Recipe recipe: userRecipe) {
+            recipe.setUser(null);
+            recipeRepository.save(recipe);
+        }
 
-		tempUser.setUsername(userDto.getUsername());
-		tempUser.setPassword(user.getPassword());
-		tempUser.setEmail(user.getEmail());
+        userRepository.delete(user);
+        return "User deleted";
 
-//		userRepository.save(tempUser);
+    }
 
-		return mapToDto(userRepository.save(tempUser));
-	}
+    @Override
+    public UserDto updateById(long id, UserDto userDto) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "Id", id));
 
-	private User mapToEntity(com.recipe.RecipeSharingApp.payload.UserDto dto) {
-		return modelMapper.map(dto, User.class);
-	}
+        User tempUser = mapToEntity(userDto);
 
-	private UserDto mapToDto(User user) {
-		return modelMapper.map(user, UserDto.class);
-	}
+        user.setUsername(tempUser.getUsername());
+        user.setPassword(passwordEncoder.encode(tempUser.getPassword()));
+        user.setEmail(tempUser.getEmail());
+
+        return mapToDto(userRepository.save(user));
+    }
+
+    private User mapToEntity(com.recipe.RecipeSharingApp.payload.UserDto dto) {
+        return modelMapper.map(dto, User.class);
+    }
+
+    private UserDto mapToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
 
 }
